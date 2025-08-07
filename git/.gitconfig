@@ -1,0 +1,244 @@
+[user]
+	email = 2052646+bean5@users.noreply.github.com
+	name = bean5
+	global = bean5
+
+# See https://bitbucket.org/durdn/cfg/src/master/.gitconfig?at=master&fileviewer=file-view-default
+# alias {{{
+[alias "rom"]
+	preserve-merges = rebase -i --preserve-merge origin/main
+[alias]
+	# tweak defaults {{{
+	grep	= grep -Ii
+	ai		= add --interactive
+	# }}}
+
+	# pull and fetch {{{
+	f = fetch
+	pr		= pull --rebase
+	# }}}
+
+
+	# branch {{{
+	br = branch
+	bra		= branch -ra
+	branch	= branch -ra
+	co = checkout
+	gr		= grep -Ii
+	# }}}
+
+
+	# commit {{{
+	ci = commit
+	cim = commit -m
+	cm		= commit -m
+	cma		= commit -a -m
+	ca = commit --amend
+	#caa	= commit -a --amend -C HEAD
+	caa		= commit --amend -C HEAD
+
+	na = notes add
+
+
+	# merges and resolutions
+	ours	= "!f() { git co --ours $@ && git add $@; }; f"
+	theirs	= "!f() { git co --theirs $@ && git add $@; }; f"
+	mom		= merge origin/main
+	# }}}
+
+
+	# commit {{{
+	# rebases and squishing
+	squish	= "!f() { git reset --soft HEAD~1 && git commit --amend }; f"
+	ra		= rebase --abort
+	rc		= rebase --continue
+	rbm		= rebase -i origin/main
+	rbc		= rebase -i current
+	# rh	= rebase -i helps
+	# }}}
+
+
+	# staging {{{
+	chmod	= add --chmod=+x
+	ch		= cherry-pick
+	# }}}
+
+
+	# log commands {{{
+	## filelog
+	fl		= log -u
+	l = log -1
+	last = log -1 HEAD
+	ld = log --oneline --decorate
+	lo		= log --oneline
+	lg		= log --graph
+	lp		= log --graph --decorate --date=relative --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [a:%an,c:%cn]"
+	lpn		= log --graph --decorate --date=relative --numstat --pretty=format:"%C(yellow)%h\\ [%ad]%Cred%d\\ %Creset%s%Cblue\\ [a:%an,c:%cn]"
+
+	#lc	= "!f() { git ll "$1"^.."$1"; }; f"
+
+	# last tag created
+	lasttag	= describe --tags --abbrev=0
+	lt		= describe --tags --abbrev=0
+
+	s = status
+	status	= status -s
+	# }}}
+
+
+	# assume aliases {{{
+	assume		= update-index --assume-unchanged
+	unassume	= update-index --no-assume-unchanged
+	# show assumed files
+	assumed		= "!git ls-files -v | grep ^h | cut -c 3-"
+	# unassume all the assumed files
+	unassumeall	= "!git assumed | xargs git update-index --no-assume-unchanged"
+	assumeall	= "!git status -s | awk {'print $2'} | xargs git assume"
+	# }}}
+
+
+	# diff {{{
+	diff	= diff --word-diff
+	d		= diff --word-diff
+	dc		= diff --cached
+	# diff last commit
+	dlc		= diff --cached HEAD^
+	dr		= "!f() { git diff -w "$1"^.."$1"; }; f"
+	diffr	= "!f() { git diff "$1"^.."$1"; }; f"
+	dom = diff origin/main
+	dm = diff main
+	dw		= diff -w
+	dww		= diff -w --word-diff
+	# }}}
+
+
+	# reset commands {{{
+	r		= reset
+	r1		= reset HEAD~
+	r2		= reset HEAD~2
+	rsh		= reset HEAD
+	rhh		= reset --hard
+	rh1		= reset --hard HEAD~
+	rh2		= reset --hard HEAD~2
+	# }}}
+
+
+	# stash {{{
+	st = stash
+	sl		= stash list
+	sa		= stash apply
+	ss		= stash save
+	# }}}
+
+
+	# subtree {{{
+	# add
+	sba		= "!f() { git subtree add --prefix $2 $1 main --squash; }; f"
+	# update/pull
+	sbu		= "!f() { git subtree pull --prefix $2 $1 main --squash; }; f"
+	# }}}
+
+
+	# git svn {{{
+	svnr	= svn rebase
+	svnd	= svn dcommit
+	svnl	= svn log --oneline --show-commit
+	# }}}
+
+
+	# convoluted aliases {{{
+	# grep from root folder
+	graph	 = "!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f"
+	# rename branch tree to done-
+	donegraph = "!f() { git branch | grep "$1" | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
+	# add bitbucket remote
+	ragraph	 = "!f() { git remote add $1 https://bitbucket.org/$2.git; }; f"
+	# }}}
+
+
+	# worktree list {{{
+	wl		= worktree list
+	# undo from here http://megakemp.com/2016/08/25/git-undo/
+	undo	= "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
+	# }}}
+
+
+	# serving {{{
+	# From https://railsware.com/blog/2013/09/19/taming-the-git-daemon-to-quickly-share-git-repository/
+	hub		= !git daemon --base-path=. --export-all --enable=receive-pack --reuseaddr --informative-errors --verbose
+	serve	= !git daemon --base-path=. --export-all --reuseaddr --informative-errors --verbose
+	# }}}
+
+
+	# various useful {{{
+	# list remotes
+	rem		= "!git config -l | grep remote.*url | tail -n +2"
+
+	# apply patch from other local repo
+	lap		= "!f() { git --git-dir=$1 format-patch -k -1 --stdout $2 | git am -3 -k; }; f"
+
+	# open markdown files edited in last commit
+	# open just created markdown in working directory
+	newmd	= "!vi $(git status -s | awk {'print $2'})"
+
+	# initial empty commit
+	empty	= "!git commit -am\"[empty] Initial commit\" --allow-empty"
+
+	# list all aliases
+	la		= "!git config -l | grep alias | cut -c 7-"
+
+	flip	= !git checkout -
+	swap	= !git switch -
+
+	# revdate	= "!f() { git commit --amend --no-edit --date \"$(date)\"; }; f"
+	# revdate	= !git commit --amend --reset-author --no-edit
+	revdate	= !git commit --amend --no-edit --date=now
+	cleanup	= gc --aggressive
+
+	rescue		= !git fsck --full --no-reflogs --unreachable --lost-found | grep commit | cut -d\\  -f3 | xargs -n 1 git log -n 1 --pretty=oneline > .git/lost-found.txt
+	sortdiff	= !sh -c 'git diff "$@" | grep "^[+-]" | sort --key=1.2 | uniq -u -s1'
+	bclean		= "!f() { git branch --merged ${1-main} | grep -v " ${1-main}$" | xargs -r git branch -d; }; f"
+	new			= !sh -c 'git ls $1@{1}..$1@{0} "$@"'
+	# }}}
+
+
+# }}}
+
+[push]
+	default = current
+[gc]
+	auto = 0
+[merge]
+	tool = meld
+[core]
+	excludesfile = ~/.gitignore_global
+# color {{{
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	ui = auto
+
+[color "branch"]
+	current = red reverse
+	local = blue
+	remote = green
+
+[color "diff"]
+	meta = yellow
+	frag = magenta
+	old = red bold
+	new = green
+	plain = white
+
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+# }}}
+[credential]
+	helper = cache
+[rebase]
+	autosquash = true
+[init]
+	defaultBranch = main
