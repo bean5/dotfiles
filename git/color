@@ -1,0 +1,24 @@
+# color {{{
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	ui = auto
+
+[color "branch"]
+	current = red reverse
+	local = blue
+	remote = green
+
+[color "diff"]
+	frag = magenta
+	meta = yellow
+	new = green
+	old = red bold
+	plain = white
+
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+# }}}

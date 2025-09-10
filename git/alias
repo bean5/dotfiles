@@ -1,8 +1,3 @@
-[user]
-	email = 2052646+bean5@users.noreply.github.com
-	name = bean5
-	global = bean5
-
 # See https://bitbucket.org/durdn/cfg/src/master/.gitconfig?at=master&fileviewer=file-view-default
 # alias {{{
 [alias "rom"]
@@ -201,44 +196,4 @@
 	new			= !sh -c 'git ls $1@{1}..$1@{0} "$@"'
 	# }}}
 
-
 # }}}
-
-[push]
-	default = current
-[gc]
-	auto = 0
-[merge]
-	tool = meld
-[core]
-	excludesfile = ~/.gitignore_global
-# color {{{
-[color]
-	branch = auto
-	diff = auto
-	status = auto
-	ui = auto
-
-[color "branch"]
-	current = red reverse
-	local = blue
-	remote = green
-
-[color "diff"]
-	meta = yellow
-	frag = magenta
-	old = red bold
-	new = green
-	plain = white
-
-[color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
-# }}}
-[credential]
-	helper = cache
-[rebase]
-	autosquash = true
-[init]
-	defaultBranch = main

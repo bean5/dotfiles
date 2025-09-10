@@ -1,0 +1,31 @@
+[core]
+	excludesfile = /home/bean/SyncThing/dotfiles/git/gitignore
+
+
+[include]
+	path = /home/bean/SyncThing/dotfiles/git/alias
+
+[include]
+	path = /home/bean/SyncThing/dotfiles/git/color
+
+[include]
+	path = /home/bean/SyncThing/dotfiles/git/user
+
+
+[credential]
+	helper = cache
+
+[gc]
+	auto = 0
+
+[init]
+	defaultBranch = main
+
+[merge]
+	tool = meld
+
+[push]
+	default = current
+
+[rebase]
+	autosquash = true
